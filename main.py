@@ -3,6 +3,7 @@ from tkinter import filedialog as fd
 from tkinter.messagebox import showinfo
 import PIL.Image
 
+# Change characters for different results
 ASCII_CHARS = ["@", "#", "$", "%", "?", "*", "+", ";", ":", ",", "."]
 
 def toGreyscale(image):
@@ -23,6 +24,7 @@ def splitAsciiStr(asciiStr, imgWidth):
     asciiImg = ""
     asciiStrLen = len(asciiStr)
 
+    # Split string based on image width to create ascii image
     for i in range(0, asciiStrLen, imgWidth):
         asciiImg += asciiStr[i:i + imgWidth] + "\n"
     
@@ -32,7 +34,8 @@ def saveAsciiToFile(asciiImg):
     with open("ascii.txt", "w") as f:
         f.write(asciiImg)
 
-def select_file():
+# UI for selecting file
+def selectFile():
     path = fd.askopenfilename()
     try:
         image = PIL.Image.open(path)
@@ -50,11 +53,12 @@ def select_file():
         
         saveAsciiToFile(asciiImg)
 
-        showinfo(title='Success', message='Image converted and ASCII saved to ascii_image.txt')
+        showinfo(title='Success', message='Image converted and ASCII saved to ascii.txt')
 
     except Exception as e:
         showinfo(title='Error', message=f'Unable to convert image: {e}')
 
+# Base application
 root = tk.Tk()
 root.title('ASCII Art Generator')
 root.geometry('300x150')
@@ -62,7 +66,7 @@ root.geometry('300x150')
 openButton = tk.Button(
     root,
     text='Open File',
-    command=select_file
+    command=selectFile
 )
 
 openButton.pack(expand=True)
